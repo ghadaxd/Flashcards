@@ -1,6 +1,5 @@
 export const ADD_DECK = "ADD_DECK";
-
-export const GET_DECKS = "GET_DECKS";
+export const ADD_CARD = "ADD_CARD";
 
 export const addDeck = (deck) => {
   return {
@@ -9,8 +8,10 @@ export const addDeck = (deck) => {
   };
 };
 
-export const getDecks = () => {
+export const addCard = (card, deckId) => {
   return {
-    type: GET_DECKS,
+    type: ADD_CARD,
+    card,
+    deckId,
   };
 };

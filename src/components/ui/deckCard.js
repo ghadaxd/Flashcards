@@ -9,7 +9,9 @@ export default DeckCard = ({ deck, type, navigation }) => {
   return (
     <Container
       key={key}
-      onPress={() => navigation.navigate("Deck", { deck })}
+      onPress={() =>
+        navigation.navigate("Deck", { id: deck.id, title: deck.title })
+      }
       disabled={type !== "home"}
       type={type}
     >
@@ -24,7 +26,7 @@ const Container = styled.TouchableOpacity`
   margin-vertical: 8px;
   margin-horizontal: 16px;
   width: 90%;
-  height: ${(props) => (props.type === "deck" ? "40%" : "")};
+  height: ${(props) => (props.type === "deck" ? "40%" : "null")};
   padding: 5%;
   justify-content: center;
   align-items: center;

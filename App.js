@@ -14,6 +14,7 @@ import { purple, white } from "./src/utils/colors";
 import Home from "./src/components/screens/Home";
 import AddDeck from "./src/components/screens/AddDeck";
 import Deck from "./src/components/screens/Deck";
+import AddCard from "./src/components/screens/AddCard";
 
 const Stack = createStackNavigator();
 
@@ -51,7 +52,12 @@ export default function App() {
             })}
           />
           <Stack.Screen name="Add Deck" component={AddDeck} />
-          <Stack.Screen name="Deck" component={Deck} />
+          <Stack.Screen
+            name="Deck"
+            component={Deck}
+            options={({ route }) => ({ title: route.params.title })}
+          />
+          <Stack.Screen name="Add Card" component={AddCard} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
