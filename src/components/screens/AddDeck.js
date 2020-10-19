@@ -1,13 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
+import { StatusBar } from "react-native";
 
 import { connect } from "react-redux";
 import { addDeck } from "../../actions/decks";
 
-import CustomStatusBar from "../ui/customStatusBar";
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
-import { lightGray } from "../../utils/colors";
 
 class AddDeck extends Component {
   constructor() {
@@ -18,18 +17,21 @@ class AddDeck extends Component {
   }
 
   addDeck = () => {
-    this.props.addDeck({ title: this.state.deckTitle, cards: [] });
+    this.props.addDeck({
+      id: Math.floor(Math.random() * 100) + 1,
+      title: this.state.deckTitle,
+      cards: [],
+    });
     this.props.navigation.navigate("Decks");
   };
 
   render() {
     return (
       <Container>
-        <CustomStatusBar />
-        <Wrapper>
+        <Wrapper behavior="height">
           <TextInput
             placeholder="Enter title"
-            height="5%"
+            height="6%"
             value={this.state.deckTitle}
             onChangeText={(text) => this.setState({ deckTitle: text })}
           />
@@ -52,12 +54,12 @@ const mapDispatchToProps = (dispatch) => {
 
 export default connect(null, mapDispatchToProps)(AddDeck);
 
-const Container = styled.View`
-  background-color: ${lightGray};
+const Container = styled.SafeAreaView`
   flex: 1;
+  margin-top: ${StatusBar.currentHeight || 0}px;
 `;
 
-const Wrapper = styled.View`
+const Wrapper = styled.KeyboardAvoidingView`
   flex: 1;
   align-items: center;
   margin-top: 5%;

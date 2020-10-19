@@ -13,10 +13,10 @@ export default DeckCard = ({ deckTitle, numOfCards, height }) => {
 };
 
 const Container = styled.View`
-  height: ${(props) => props.height};
-  width: 90%;
-  margin-top: 5%;
   background-color: ${white};
+  margin-vertical: 8px;
+  margin-horizontal: 16px;
+  padding: 5%;
   justify-content: center;
   align-items: center;
   border-radius: 5px;

@@ -16,15 +16,15 @@ const CustomButton = styled.TouchableOpacity`
     props.type === "primary" ? purple : "transparent"};
   border-width: 1px;
   border-color: ${purple};
-  height: 5.5%;
+  height: 6%;
   width: 90%;
   margin-top: 5%;
+  align-items: center;
+  justify-content: center;
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.075);
 `;
 
 const BtnTitle = styled.Text`
   color: ${(props) => (props.type === "primary" ? white : purple)};
-  text-align: center;
-  margin-top: 3%;
 `;

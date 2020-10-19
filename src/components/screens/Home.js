@@ -1,63 +1,68 @@
 import React, { Component } from "react";
+import { FlatList, StatusBar } from "react-native";
+import { connect } from "react-redux";
 
 import styled from "styled-components/native";
 
-import { lightGray, gray } from "../../utils/colors";
-import CustomStatusBar from "../ui/customStatusBar";
 import DeckCard from "../ui/deckCard";
+import { gray } from "../../utils/colors";
 
-export default class Home extends Component {
+class Home extends Component {
   constructor() {
     super();
     this.state = {
-      decks: [
-        { id: 0, deckTitle: "Deck1", numOfCards: 3 },
-        { id: 1, deckTitle: "Deck2", numOfCards: 4 },
-      ],
+      decks: [],
     };
   }
 
-  render() {
-    if (this.state.decks.length === 0) {
-      return (
-        <Container>
-          <CustomStatusBar />
-          <Wrapper>
-            <NoDataText>You haven't created any decks yet! 😃</NoDataText>
-          </Wrapper>
-        </Container>
-      );
+  componentDidMount() {
+    this.setState({
+      decks: this.props.decks,
+    });
+  }
+
+  componentDidUpdate() {
+    if (this.props.decks !== this.state.decks) {
+      this.setState({
+        decks: this.props.decks,
+      });
     }
+  }
+
+  render() {
     return (
       <Container>
-        <CustomStatusBar />
-        <Wrapper>
-          {this.state.decks.map(({ id, deckTitle, numOfCards }) => (
-            <DeckCard
-              deckTitle={deckTitle}
-              numOfCards={numOfCards}
-              height="20%"
-              key={id}
-            />
-          ))}
-        </Wrapper>
+        <FlatList
+          data={this.state.decks}
+          renderItem={({ item }) => (
+            <DeckCard key={item.key} deckTitle={item.title} numOfCards={0} />
+          )}
+          keyExtractor={(item) => item.key}
+          ListEmptyComponent={
+            <NoDataText>You haven't created any decks yet! 😃</NoDataText>
+          }
+        />
       </Container>
     );
   }
 }
 
-const Container = styled.View`
-  background-color: ${lightGray};
-  flex: 1;
-`;
+function mapStateToProps(decks) {
+  return {
+    decks,
+  };
+}
 
-const Wrapper = styled.View`
+export default connect(mapStateToProps)(Home);
+
+const Container = styled.SafeAreaView`
   flex: 1;
-  align-items: center;
-  margin-top: 5%;
+  margin-top: ${StatusBar.currentHeight || 0}px;
 `;
 
 const NoDataText = styled.Text`
   font-size: 14px;
   color: ${gray};
+  text-align: center;
+  margin-top: 10%;
 `;
