@@ -3,19 +3,28 @@ import styled from "styled-components/native";
 
 import { purple, white } from "../../utils/colors";
 
-export default DeckCard = ({ deckTitle, numOfCards, height }) => {
+export default DeckCard = ({ deck, type, navigation }) => {
+  const { key, title, cards } = deck;
+
   return (
-    <Container height={height}>
-      <DeckTitle>{deckTitle}</DeckTitle>
-      <CardsNums>{numOfCards}</CardsNums>
+    <Container
+      key={key}
+      onPress={() => navigation.navigate("Deck", { deck })}
+      disabled={type !== "home"}
+      type={type}
+    >
+      <DeckTitle>{title}</DeckTitle>
+      <CardsNums>{cards.length} cards</CardsNums>
     </Container>
   );
 };
 
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   background-color: ${white};
   margin-vertical: 8px;
   margin-horizontal: 16px;
+  width: 90%;
+  height: ${(props) => (props.type === "deck" ? "40%" : "")};
   padding: 5%;
   justify-content: center;
   align-items: center;

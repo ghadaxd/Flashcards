@@ -13,6 +13,7 @@ import { purple, white } from "./src/utils/colors";
 
 import Home from "./src/components/screens/Home";
 import AddDeck from "./src/components/screens/AddDeck";
+import Deck from "./src/components/screens/Deck";
 
 const Stack = createStackNavigator();
 
@@ -50,6 +51,7 @@ export default function App() {
             })}
           />
           <Stack.Screen name="Add Deck" component={AddDeck} />
+          <Stack.Screen name="Deck" component={Deck} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

@@ -35,7 +35,12 @@ class Home extends Component {
         <FlatList
           data={this.state.decks}
           renderItem={({ item }) => (
-            <DeckCard key={item.key} deckTitle={item.title} numOfCards={0} />
+            <DeckCard
+              key={item.key}
+              deck={item}
+              navigation={this.props.navigation}
+              type="home"
+            />
           )}
           keyExtractor={(item) => item.key}
           ListEmptyComponent={
