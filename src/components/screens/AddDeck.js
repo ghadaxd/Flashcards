@@ -7,22 +7,29 @@ import { addDeck } from "../../actions/decks";
 
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
+import { purple } from "../../utils/colors";
 
 class AddDeck extends Component {
   constructor() {
     super();
     this.state = {
       deckTitle: "",
+      isEmpty: false,
     };
   }
 
   addDeck = () => {
-    this.props.addDeck({
-      id: Math.floor(Math.random() * 100) + 1,
-      title: this.state.deckTitle,
-      cards: [],
-    });
-    this.props.navigation.navigate("Decks");
+    if (this.state.deckTitle === "") {
+      this.setState({ isEmpty: true });
+    } else {
+      this.setState({ isEmpty: false });
+      this.props.addDeck({
+        id: Math.floor(Math.random() * 100) + 1,
+        title: this.state.deckTitle,
+        cards: [],
+      });
+      this.props.navigation.navigate("Decks");
+    }
   };
 
   render() {
@@ -35,6 +42,11 @@ class AddDeck extends Component {
             value={this.state.deckTitle}
             onChangeText={(text) => this.setState({ deckTitle: text })}
           />
+          {this.state.isEmpty && (
+            <WarningMsg>
+              ⚠️ You have to enter a title to create a deck.
+            </WarningMsg>
+          )}
           <Button
             title="Add Deck"
             type="primary"
@@ -63,4 +75,10 @@ const Wrapper = styled.KeyboardAvoidingView`
   flex: 1;
   align-items: center;
   margin-top: 5%;
+`;
+
+const WarningMsg = styled.Text`
+  font-size: 12px;
+  color: ${purple};
+  margin-top: 3%;
 `;
