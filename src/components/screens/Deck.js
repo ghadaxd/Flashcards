@@ -36,7 +36,11 @@ class Deck extends Component {
           <Button
             title="Start Quiz"
             type="primary"
-            onPress={() => alert("START")}
+            onPress={() =>
+              this.props.navigation.navigate("Quiz", {
+                id: this.props.route.params.id,
+              })
+            }
           />
         </Wrapper>
       </Container>

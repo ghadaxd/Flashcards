@@ -15,6 +15,7 @@ import Home from "./src/components/screens/Home";
 import AddDeck from "./src/components/screens/AddDeck";
 import Deck from "./src/components/screens/Deck";
 import AddCard from "./src/components/screens/AddCard";
+import Quiz from "./src/components/screens/Quiz";
 
 const Stack = createStackNavigator();
 
@@ -58,6 +59,7 @@ export default function App() {
             options={({ route }) => ({ title: route.params.title })}
           />
           <Stack.Screen name="Add Card" component={AddCard} />
+          <Stack.Screen name="Quiz" component={Quiz} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
