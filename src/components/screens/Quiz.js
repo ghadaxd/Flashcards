@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
-import { StatusBar, View } from "react-native";
+import { StatusBar, View, Animated, Easing, Platform } from "react-native";
 import { connect } from "react-redux";
-import { AntDesign } from "@expo/vector-icons";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { AntDesign, FontAwesome5 } from "@expo/vector-icons";
 
 import Button from "../ui/button";
 import Card from "../ui/card";
@@ -17,13 +16,39 @@ class Quiz extends Component {
       type: "question",
       cardNum: 0,
       result: 0,
+      side: 0,
+      progress: new Animated.Value(0),
+      flipCard: new Animated.ValueXY({ x: 50, y: 50 }),
     };
   }
 
   flip = (type) => {
-    //will do the flip animation.
-    this.setState({
-      type: type === "question" ? "answer" : "question",
+    const { flipCard, progress, side } = this.state;
+
+    flipCard.setValue({
+      x: 50,
+      y: side === 0 ? 50 : 100,
+    });
+
+    Animated.parallel([
+      Animated.timing(progress, {
+        toValue: side === 0 ? 100 : 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(flipCard, {
+        toValue: {
+          x: 50,
+          y: side === 0 ? 100 : 50,
+        },
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]).start(() => {
+      this.setState({
+        type: type === "question" ? "answer" : "question",
+        side: side === 0 ? 1 : 0,
+      });
     });
   };
 
@@ -64,7 +89,7 @@ class Quiz extends Component {
       );
     }
 
-    const { cards, type, cardNum, result } = this.state;
+    const { cards, type, cardNum, result, flipCard, progress } = this.state;
 
     if (cardNum === cards.length) {
       return (
@@ -110,15 +135,62 @@ class Quiz extends Component {
       );
     }
 
+    // Handle cardA transformation
+    const cardATransform = flipCard.y.interpolate({
+      inputRange: [0, 50, 100, 150],
+      outputRange: ["-180deg", "0deg", "180deg", "0deg"],
+      extrapolate: "clamp",
+    });
+    const sideAOpacity = progress.interpolate({
+      inputRange: [50, 51],
+      outputRange: [100, 0],
+      extrapolate: "clamp",
+    });
+
+    // Handle cardB transformation
+    const cardBTransform = flipCard.y.interpolate({
+      inputRange: [0, 50, 100, 150],
+      outputRange: ["0deg", "180deg", "0deg", "-180deg"],
+      extrapolate: "clamp",
+    });
+    const sideBOpacity = progress.interpolate({
+      inputRange: [50, 51],
+      outputRange: [0, 100],
+      extrapolate: "clamp",
+    });
+
     return (
       <Container>
         <Wrapper style={{ justifyContent: "center" }}>
           <Content>{`${cardNum + 1}/${cards.length}`}</Content>
-          <Card
-            content={cards[cardNum][type]}
-            type={type}
-            correctQuestion={this.correctQuestion}
-          />
+          <Animated.View
+            style={[
+              {
+                width: "100%",
+                transform: [{ rotateY: cardATransform }],
+                opacity: sideAOpacity,
+              },
+            ]}
+          >
+            <Card content={cards[cardNum]["question"]} type={"question"} />
+          </Animated.View>
+          <Animated.View
+            style={[
+              {
+                width: "100%",
+                position: "absolute",
+                height: "45%",
+                transform: [{ rotateY: cardBTransform }],
+                opacity: sideBOpacity,
+              },
+            ]}
+          >
+            <Card
+              content={cards[cardNum]["answer"]}
+              type={"answer"}
+              correctQuestion={this.correctQuestion}
+            />
+          </Animated.View>
           <Button
             title={`Show ${type === "question" ? "Answer" : "Question"}`}
             type="secondary"

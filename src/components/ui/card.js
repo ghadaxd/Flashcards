@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components/native";
+import { Animated, StyleSheet } from "react-native";
 
 import Button from "./button";
-import { purple, white } from "../../utils/colors";
+import { purple, white, red } from "../../utils/colors";
 
-export default Card = ({ content, type, correctQuestion }) => {
+export default Card = ({ content, type, correctQuestion, style }) => {
   const btnStyle = {
     height: "100%",
     width: "50%",
@@ -14,7 +15,7 @@ export default Card = ({ content, type, correctQuestion }) => {
   };
 
   return (
-    <Container disabled={true} type={type}>
+    <Container disabled={true} type={type} style={style}>
       <Content>{content}</Content>
       {type === "answer" && (
         <Wrapper>
@@ -36,8 +37,20 @@ export default Card = ({ content, type, correctQuestion }) => {
   );
 };
 
-const Container = styled.TouchableOpacity`
+const styles = StyleSheet.create({
+  container: {
+    width: "90%",
+    height: "40%",
+    backgroundColor: white,
+    justifyContent: "space-between",
+    alignItems: "center",
+    borderRadius: 7,
+  },
+});
+
+const Container = styled.View`
   background-color: ${white};
+  flex-grow: 1;
   margin-vertical: 8px;
   margin-horizontal: 16px;
   width: 90%;
