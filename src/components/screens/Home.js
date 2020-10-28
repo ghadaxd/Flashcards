@@ -42,7 +42,7 @@ class Home extends Component {
               type="home"
             />
           )}
-          keyExtractor={(item) => item.key}
+          keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={
             <NoDataText>You haven't created any decks yet! 😃</NoDataText>
           }
