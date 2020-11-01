@@ -4,11 +4,10 @@ import styled from "styled-components/native";
 import { purple, white } from "../../utils/colors";
 
 export default DeckCard = ({ deck, type, navigation }) => {
-  const { key, title, cards } = deck;
+  const { title, cards } = deck;
 
   return (
     <Container
-      key={key}
       onPress={() =>
         navigation.navigate("Deck", { id: deck.id, title: deck.title })
       }

@@ -36,7 +36,6 @@ class Home extends Component {
           data={this.state.decks}
           renderItem={({ item }) => (
             <DeckCard
-              key={item.key}
               deck={item}
               navigation={this.props.navigation}
               type="home"
