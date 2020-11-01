@@ -1,34 +1,23 @@
 import React from "react";
 import styled from "styled-components/native";
-import { Animated, StyleSheet } from "react-native";
 
 import Button from "./button";
-import { purple, white, red } from "../../utils/colors";
+import { purple, white } from "../../utils/colors";
 
-export default Card = ({ content, type, correctQuestion, style }) => {
-  const btnStyle = {
-    height: "100%",
-    width: "50%",
-    marginTop: "0%",
-    marginBottom: "0%",
-    borderRadius: "0%",
-  };
-
+export default Card = ({ content, type, correctQuestion, flip }) => {
   return (
-    <Container disabled={true} type={type} style={style}>
+    <Container onPress={() => flip()}>
       <Content>{content}</Content>
       {type === "answer" && (
         <Wrapper>
           <Button
-            style={btnStyle}
             title="Correct"
-            type="primary"
+            type="primary-small"
             onPress={() => correctQuestion(true)}
           />
           <Button
-            style={btnStyle}
             title="Incorrect"
-            type="secondary"
+            type="secondary-small"
             onPress={() => correctQuestion(false)}
           />
         </Wrapper>
@@ -37,18 +26,7 @@ export default Card = ({ content, type, correctQuestion, style }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    width: "90%",
-    height: "40%",
-    backgroundColor: white,
-    justifyContent: "space-between",
-    alignItems: "center",
-    borderRadius: 7,
-  },
-});
-
-const Container = styled.View`
+const Container = styled.TouchableOpacity`
   background-color: ${white};
   flex-grow: 1;
   margin-vertical: 8px;
@@ -57,6 +35,7 @@ const Container = styled.View`
   height: 40%;
   justify-content: space-between;
   align-items: center;
+  align-self: center;
   border-radius: 5px;
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.075);
 `;

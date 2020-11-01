@@ -13,18 +13,35 @@ export default Button = (props) => {
 
 const CustomButton = styled.TouchableOpacity`
   background-color: ${(props) =>
-    props.type === "primary" ? purple : "transparent"};
+    props.type === "primary" || props.type === "primary-small"
+      ? purple
+      : "transparent"};
   border-width: 1px;
   border-color: ${purple};
-  height: 6%;
-  width: 90%;
-  margin-top: 5%;
+  height: ${(props) =>
+    props.type === "primary-small" || props.type === "secondary-small"
+      ? "100%"
+      : "6%"};
+  width: ${(props) =>
+    props.type === "primary-small" || props.type === "secondary-small"
+      ? "50%"
+      : "90%"};
+  margin-top: ${(props) =>
+    props.type === "primary-small" || props.type === "secondary-small"
+      ? 0
+      : "5%"};
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
+  border-radius: ${(props) =>
+    props.type === "primary-small" || props.type === "secondary-small"
+      ? 0
+      : "5px"};
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.075);
 `;
 
 const BtnTitle = styled.Text`
-  color: ${(props) => (props.type === "primary" ? white : purple)};
+  color: ${(props) =>
+    props.type === "primary" || props.type === "primary-small"
+      ? white
+      : purple};
 `;
