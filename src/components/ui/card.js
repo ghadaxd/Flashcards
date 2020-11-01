@@ -4,9 +4,9 @@ import styled from "styled-components/native";
 import Button from "./button";
 import { purple, white } from "../../utils/colors";
 
-export default Card = ({ content, type, correctQuestion, flip }) => {
+export default Card = ({ content, type, correctQuestion, flip, flipType }) => {
   return (
-    <Container onPress={() => flip()}>
+    <Container onPress={() => flip(flipType)}>
       <Content>{content}</Content>
       {type === "answer" && (
         <Wrapper>

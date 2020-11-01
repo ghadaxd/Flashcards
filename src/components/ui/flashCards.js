@@ -106,6 +106,7 @@ export default class FlashCards extends Component {
             type={"question"}
             correctQuestion={this.correctQuestion}
             flip={this.flip}
+            flipType={type}
           />
         </Animated.View>
         <Animated.View style={[styles.cardB, this.getTransformation("B")]}>
@@ -114,6 +115,7 @@ export default class FlashCards extends Component {
             type={"answer"}
             correctQuestion={this.correctQuestion}
             flip={this.flip}
+            flipType={type}
           />
         </Animated.View>
         <Button
