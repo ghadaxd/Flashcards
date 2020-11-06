@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
 import { StatusBar } from "react-native";
-import { connect } from "react-redux";
 
 import Button from "../ui/button";
 import DeckCard from "../ui/deckCard";
@@ -10,16 +9,27 @@ class Deck extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      deck: props.deck,
+      deck: this.props.route.params.deck,
     };
   }
 
+  componentDidUpdate() {
+    const deck = this.props.route.params.deck;
+    if (deck !== this.state.deck) {
+      this.setState({
+        deck,
+      });
+    }
+  }
+
   render() {
+    const { deck } = this.state;
+
     return (
       <Container>
         <Wrapper>
           <DeckCard
-            deck={this.state.deck}
+            deck={deck}
             navigation={this.props.navigation}
             type="deck"
           />
@@ -28,8 +38,7 @@ class Deck extends Component {
             type="secondary"
             onPress={() =>
               this.props.navigation.navigate("Add Card", {
-                id: this.props.route.params.id,
-                title: this.props.route.params.title,
+                id: deck.id,
               })
             }
           />
@@ -38,7 +47,7 @@ class Deck extends Component {
             type="primary"
             onPress={() =>
               this.props.navigation.navigate("Quiz", {
-                id: this.props.route.params.id,
+                cards: deck.cards,
               })
             }
           />
@@ -48,13 +57,7 @@ class Deck extends Component {
   }
 }
 
-function mapStateToProps(decks, props) {
-  return {
-    deck: decks.find((deck) => deck.id === props.route.params.id),
-  };
-}
-
-export default connect(mapStateToProps)(Deck);
+export default Deck;
 
 const Container = styled.SafeAreaView`
   flex: 1;

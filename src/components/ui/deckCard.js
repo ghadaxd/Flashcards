@@ -8,9 +8,7 @@ export default DeckCard = ({ deck, type, navigation }) => {
 
   return (
     <Container
-      onPress={() =>
-        navigation.navigate("Deck", { id: deck.id, title: deck.title })
-      }
+      onPress={() => navigation.navigate("Deck", { deck })}
       disabled={type !== "home"}
       type={type}
     >

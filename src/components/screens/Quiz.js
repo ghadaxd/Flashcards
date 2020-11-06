@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
 import { StatusBar } from "react-native";
-import { connect } from "react-redux";
 
 import NoCardsWarning from "../ui/noCardsWarning";
 import QuizResult from "../ui/quizResult";
@@ -11,7 +10,7 @@ class Quiz extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cards: props.cards,
+      cards: props.route.params.cards,
       cardNum: 0,
       result: 0,
     };
@@ -66,13 +65,7 @@ class Quiz extends Component {
   }
 }
 
-function mapStateToProps(decks, props) {
-  return {
-    cards: decks.find((deck) => deck.id === props.route.params.id).cards,
-  };
-}
-
-export default connect(mapStateToProps)(Quiz);
+export default Quiz;
 
 const Container = styled.SafeAreaView`
   flex: 1;

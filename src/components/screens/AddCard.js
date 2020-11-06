@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { StatusBar } from "react-native";
 
-import { connect } from "react-redux";
-import { addCard } from "../../actions/decks";
+import { _addCard } from "../../utils/api";
 
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
@@ -19,25 +18,20 @@ class AddCard extends Component {
     };
   }
 
-  addCard = () => {
+  addCard = async () => {
     const { question, answer } = this.state;
     if (question === "" || answer === "") {
       this.setState({ isEmpty: true });
     } else {
       this.setState({ isEmpty: false });
-      this.props.addCard(
-        {
-          id: Math.floor(Math.random() * 100) + 1,
-          question,
-          answer,
-        },
-        this.props.route.params.id
-      );
 
-      this.props.navigation.navigate("Deck", {
-        id: this.props.route.params.id,
-        title: this.props.route.params.title,
+      const deck = await _addCard(this.props.route.params.id, {
+        id: Math.floor(Math.random() * 100) + 1,
+        question,
+        answer,
       });
+
+      this.props.navigation.navigate("Deck", { deck });
     }
   };
 
@@ -74,13 +68,7 @@ class AddCard extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addCard: (card, deckId) => dispatch(addCard(card, deckId)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AddCard);
+export default AddCard;
 
 const Container = styled.SafeAreaView`
   flex: 1;

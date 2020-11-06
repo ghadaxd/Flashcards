@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { StatusBar } from "react-native";
 
-import { connect } from "react-redux";
-import { addDeck } from "../../actions/decks";
+import { _addDeck } from "../../utils/api";
 
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
@@ -23,11 +22,16 @@ class AddDeck extends Component {
       this.setState({ isEmpty: true });
     } else {
       this.setState({ isEmpty: false });
-      this.props.addDeck({
-        id: Math.floor(Math.random() * 100) + 1,
+
+      const id = Math.floor(Math.random() * 100) + 1;
+
+      const deck = {
+        id,
         title: this.state.deckTitle,
         cards: [],
-      });
+      };
+
+      _addDeck(id, deck);
       this.props.navigation.navigate("Decks");
     }
   };
@@ -58,13 +62,7 @@ class AddDeck extends Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    addDeck: (deck) => dispatch(addDeck(deck)),
-  };
-};
-
-export default connect(null, mapDispatchToProps)(AddDeck);
+export default AddDeck;
 
 const Container = styled.SafeAreaView`
   flex: 1;

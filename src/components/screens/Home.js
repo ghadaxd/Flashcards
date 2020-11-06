@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { FlatList, StatusBar } from "react-native";
-import { connect } from "react-redux";
 
 import styled from "styled-components/native";
+
+import { _getDecks } from "../../utils/api";
 
 import DeckCard from "../ui/deckCard";
 import { gray } from "../../utils/colors";
@@ -15,16 +16,18 @@ class Home extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const decks = await _getDecks();
     this.setState({
-      decks: this.props.decks,
+      decks,
     });
   }
 
-  componentDidUpdate() {
-    if (this.props.decks !== this.state.decks) {
+  async componentDidUpdate() {
+    const decks = await _getDecks();
+    if (decks !== this.state.decks) {
       this.setState({
-        decks: this.props.decks,
+        decks,
       });
     }
   }
@@ -51,13 +54,7 @@ class Home extends Component {
   }
 }
 
-function mapStateToProps(decks) {
-  return {
-    decks,
-  };
-}
-
-export default connect(mapStateToProps)(Home);
+export default Home;
 
 const Container = styled.SafeAreaView`
   flex: 1;
