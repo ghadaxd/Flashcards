@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
-import { StatusBar } from "react-native";
+import { StatusBar, Alert } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { MaterialIcons } from "@expo/vector-icons";
+
+import { _removeDeck } from "../../utils/api";
 
 import Button from "../ui/button";
 import DeckCard from "../ui/deckCard";
@@ -13,6 +17,19 @@ class Deck extends Component {
     };
   }
 
+  componentDidMount() {
+    this.props.navigation.setOptions({
+      headerRight: () => (
+        <TouchableOpacity
+          style={{ width: "120%", right: "50%" }}
+          onPress={() => this.createAlert()}
+        >
+          <MaterialIcons name="delete-forever" size={24} color="white" />
+        </TouchableOpacity>
+      ),
+    });
+  }
+
   componentDidUpdate() {
     const deck = this.props.route.params.deck;
     if (deck !== this.state.deck) {
@@ -21,6 +38,28 @@ class Deck extends Component {
       });
     }
   }
+
+  createAlert = () => {
+    Alert.alert(
+      "Deleting Deck",
+      "Are you sure you want to delete this deck?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        { text: "Yes", onPress: () => this.deleteDeck() },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  deleteDeck = async () => {
+    const removed = await _removeDeck(this.state.deck.id);
+    if (removed === "200") {
+      this.props.navigation.navigate("Decks");
+    }
+  };
 
   render() {
     const { deck } = this.state;

@@ -3,7 +3,6 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
-
 import { MaterialIcons } from "@expo/vector-icons";
 
 import { purple } from "./src/utils/colors";

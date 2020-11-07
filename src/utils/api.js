@@ -44,16 +44,15 @@ export const _addCard = async (deckId, card) => {
 };
 
 // Error code: 444
-export const _removeDeck = async (key) => {
+export const _removeDeck = (key) => {
   try {
-    return await AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then(
-      (results) => {
-        const data = JSON.parse(results);
-        data[key] = undefined;
-        delete data[key];
-        AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
-      }
-    );
+    return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY).then((results) => {
+      const data = JSON.parse(results);
+      data[key] = undefined;
+      delete data[key];
+      AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data));
+      return "200";
+    });
   } catch (error) {
     return "ERROR: 444";
   }
