@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styled from "styled-components/native";
-import { StatusBar } from "react-native";
+import { StatusBar, Platform } from "react-native";
 
 import { _addDeck } from "../../utils/api";
 import {
@@ -36,7 +36,6 @@ class AddDeck extends Component {
       };
 
       _addDeck(id, deck);
-      // Clear local notification
       clearLocalNotification().then(setLocalNotification);
       this.props.navigation.navigate("Decks");
     }
@@ -44,25 +43,25 @@ class AddDeck extends Component {
 
   render() {
     return (
-      <Container>
-        <Wrapper behavior="height">
-          <TextInput
-            placeholder="Enter title"
-            height="6%"
-            value={this.state.deckTitle}
-            onChangeText={(text) => this.setState({ deckTitle: text })}
-          />
-          {this.state.isEmpty && (
-            <WarningMsg>
-              ⚠️ You have to enter a title to create a deck.
-            </WarningMsg>
-          )}
-          <Button
-            title="Add Deck"
-            type="primary"
-            onPress={() => this.addDeck()}
-          />
-        </Wrapper>
+      <Container
+        behavior={Platform.OS == "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
+      >
+        <TextInput
+          placeholder="Enter title"
+          height="6%"
+          value={this.state.deckTitle}
+          onChangeText={(text) => this.setState({ deckTitle: text })}
+        />
+        <WarningMsg>
+          {this.state.isEmpty &&
+            "⚠️ You have to enter a title to create a deck."}
+        </WarningMsg>
+        <Button
+          title="Add Deck"
+          type="primary"
+          onPress={() => this.addDeck()}
+        />
       </Container>
     );
   }
@@ -70,15 +69,10 @@ class AddDeck extends Component {
 
 export default AddDeck;
 
-const Container = styled.SafeAreaView`
+const Container = styled.KeyboardAvoidingView`
   flex: 1;
   margin-top: ${StatusBar.currentHeight || 0}px;
-`;
-
-const Wrapper = styled.KeyboardAvoidingView`
-  flex: 1;
   align-items: center;
-  margin-top: 5%;
 `;
 
 const WarningMsg = styled.Text`
