@@ -3,6 +3,10 @@ import styled from "styled-components/native";
 import { StatusBar } from "react-native";
 
 import { _addDeck } from "../../utils/api";
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from "../../utils/helpers";
 
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
@@ -32,6 +36,8 @@ class AddDeck extends Component {
       };
 
       _addDeck(id, deck);
+      // Clear local notification
+      clearLocalNotification().then(setLocalNotification);
       this.props.navigation.navigate("Decks");
     }
   };
