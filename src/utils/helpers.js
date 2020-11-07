@@ -5,10 +5,9 @@ import * as Permissions from "expo-permissions";
 const NOTIFICATION_KEY = "FlashCards:notifications";
 
 export async function clearLocalNotification() {
-  console.log(await Notifications.getAllScheduledNotificationsAsync());
-  //   return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
-  //     Notifications.cancelAllScheduledNotificationsAsync()
-  //   );
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(
+    Notifications.cancelAllScheduledNotificationsAsync()
+  );
 }
 
 function createNotification() {

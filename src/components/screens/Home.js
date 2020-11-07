@@ -23,7 +23,7 @@ class Home extends Component {
   async componentDidMount() {
     const decks = await _getDecks();
     if (decks.length !== 0) {
-      clearLocalNotification(); //.then(setLocalNotification);
+      clearLocalNotification().then(setLocalNotification);
     }
     this.setState({
       decks,
