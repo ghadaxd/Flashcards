@@ -4,10 +4,7 @@ import { FlatList, StatusBar } from "react-native";
 import styled from "styled-components/native";
 
 import { _getDecks } from "../../utils/api";
-import {
-  setLocalNotification,
-  clearLocalNotification,
-} from "../../utils/helpers";
+import { setLocalNotification } from "../../utils/helpers";
 
 import DeckCard from "../ui/deckCard";
 import { gray } from "../../utils/colors";
@@ -23,7 +20,7 @@ class Home extends Component {
   async componentDidMount() {
     const decks = await _getDecks();
     if (decks.length !== 0) {
-      clearLocalNotification().then(setLocalNotification);
+      setLocalNotification();
     }
     this.setState({
       decks,

@@ -3,10 +3,6 @@ import styled from "styled-components/native";
 import { StatusBar, Platform } from "react-native";
 
 import { _addDeck } from "../../utils/api";
-import {
-  clearLocalNotification,
-  setLocalNotification,
-} from "../../utils/helpers";
 
 import TextInput from "../ui/textInput";
 import Button from "../ui/button";
@@ -36,16 +32,15 @@ class AddDeck extends Component {
       };
 
       _addDeck(id, deck);
-      clearLocalNotification().then(setLocalNotification);
-      this.props.navigation.navigate("Decks");
+      this.props.navigation.replace("Deck", { deck });
     }
   };
 
   render() {
     return (
       <Container
-        behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.select({ ios: 0, android: -500 })}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 0 : -500}
       >
         <TextInput
           placeholder="Enter title"
@@ -71,7 +66,7 @@ export default AddDeck;
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight || 0}px;
+  margin-top: ${StatusBar.currentHeight || "5%"};
   align-items: center;
 `;
 

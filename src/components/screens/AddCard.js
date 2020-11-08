@@ -72,7 +72,7 @@ export default AddCard;
 
 const Container = styled.KeyboardAvoidingView`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight || 0}px;
+  margin-top: ${StatusBar.currentHeight || "5%"};
   align-items: center;
 `;
 

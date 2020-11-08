@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { View } from "react-native";
 import styled from "styled-components/native";
+
+import {
+  clearLocalNotification,
+  setLocalNotification,
+} from "../../utils/helpers";
 
 import Button from "../ui/button";
 import { purple } from "../../utils/colors";
 
 export default QuizResult = ({ goBack, result, cardsLength, restartQuiz }) => {
+  useEffect(() => {
+    clearLocalNotification().then(setLocalNotification);
+  });
+
   return (
     <>
       <FontAwesome5 name="grin-hearts" size={200} color={purple} />
