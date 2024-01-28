@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import styled from "styled-components/native";
 import { Animated, StyleSheet } from "react-native";
 
-import Button from "../ui/button";
-import Card from "../ui/card";
+import Button from "./button";
+import Card from "./card";
 import { purple } from "../../utils/colors";
 
 export default class FlashCards extends Component {

@@ -5,13 +5,13 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { MaterialIcons } from "@expo/vector-icons";
 
-import { purple } from "./src/utils/colors";
+import { purple } from "./utils/colors";
 
-import Home from "./src/components/screens/Home";
-import AddDeck from "./src/components/screens/AddDeck";
-import Deck from "./src/components/screens/Deck";
-import AddCard from "./src/components/screens/AddCard";
-import Quiz from "./src/components/screens/Quiz";
+import Home from "./components/screens/Home";
+import AddDeck from "./components/screens/AddDeck";
+import Deck from "./components/screens/Deck";
+import AddCard from "./components/screens/AddCard";
+import Quiz from "./components/screens/Quiz";
 
 const Stack = createStackNavigator();
 
